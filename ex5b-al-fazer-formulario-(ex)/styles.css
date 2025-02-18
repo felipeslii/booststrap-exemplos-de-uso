@@ -2,16 +2,18 @@
     background: linear-gradient(145deg, #FF7F50, #FF6347, #FFD700);
     padding: 2rem;
     border-radius: 15px;
-
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para a form */
 }
 
 .form-label {
     color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para o label */
 }
 
 .custom-icon {
     background-color: #FFFAF0;
     border: #FF7F50;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para o ícone */
 }
 
 .btn.btn-primary.custom-button {
@@ -19,4 +21,35 @@
     padding: 0.8rem 2rem;
     border-radius: 15px;
     border: none;
+    position: relative; /* Necessário para a transição */
+    overflow: hidden; /* Para o texto não sair do botão */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para o botão */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn.btn-primary.custom-button i {
+    font-size: 1.5rem;
+    transition: opacity 1s ease;
+}
+
+.btn.btn-primary.custom-button span {
+    color: transparent;
+    font-size: 1rem;
+    transition: color 1s ease;
+}
+
+.btn.btn-primary.custom-button:hover i {
+    opacity: 0; /* Esconde o ícone de seta ao passar o mouse */
+}
+
+.btn.btn-primary.custom-button:hover span {
+    color: white; /* Exibe a palavra "ENVIAR" quando o mouse passa */
+}
+
+.btn.btn-primary.custom-button:hover {
+    background: linear-gradient(145deg, #FF7F50, #F6E27F); /* Mantém o gradiente */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Aumenta a sombra no hover */
 }
