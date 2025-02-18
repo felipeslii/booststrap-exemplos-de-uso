@@ -10,7 +10,10 @@ html, body {
     justify-content: center;
     align-items: center;
     background-color: #f5f5f5;
+    
 }
+
+
 
 .custom-form {
     background: linear-gradient(145deg, #FF7F50, #FF6347, #FFD700);

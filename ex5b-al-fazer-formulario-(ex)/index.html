@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Exercicios Formulario 1</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap ícones -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- CSS customizado -->
+    <style>
+        body {
+            background-color: #f8f9fa; /* Cor de fundo suave */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .custom-form {
+            background: linear-gradient(145deg, #FF7F50, #FF6347, #FFD700); /* Gradiente suave */
+            padding: 3rem; /* Aumenta o espaço interno */
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            max-width: 600px;
+            margin: 50px auto; /* Centraliza o formulário */
+        }
+
+        .input-group-text {
+            background-color: #FFFAF0; /* Cor de fundo clara para os ícones */
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-label {
+            color: white; /* Cor do texto do rótulo */
+            font-weight: bold;
+        }
+
+        .custom-icon {
+            font-size: 1.2rem; /* Aumenta o tamanho dos ícones */
+        }
+
+        .input-group input {
+            border-radius: 10px; /* Arredonda as bordas dos inputs */
+            padding: 1rem; /* Adiciona espaçamento interno nos campos */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave nos campos */
+        }
+
+        .input-group input:focus {
+            border-color: #FF6347; /* Cor de borda quando o campo está em foco */
+            box-shadow: 0 0 5px rgba(255, 99, 71, 0.5); /* Efeito de foco no campo */
+        }
+
+        button {
+            background-color: #FF6347; /* Cor do botão */
+            color: white;
+            border-radius: 15px; /* Bordas arredondadas no botão */
+            padding: 1rem 2rem;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para o botão */
+            transition: all 0.3s ease; /* Transição suave para o hover */
+        }
+
+        button:hover {
+            background-color: #FF7F50; /* Cor do botão quando passa o mouse */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Aumenta a sombra quando passa o mouse */
+            cursor: pointer;
+        }
+
+        .col-sm-12.mb-3 {
+            margin-bottom: 1.5rem; /* Espaço entre os campos */
+        }
+
+    </style>
+</head>
+<body>
+    <form class="custom-form" method="get" action=".">
+        <div class="col-sm-12 mb-3">
+            <label for="cep" class="form-label">CEP</label>
+            <div class="input-group">
+                <span class="input-group-text custom-icon">
+                    <i class="bi bi-archive"></i>
+                </span>
+                <input name="cep" type="text" id="cep" value="" size="40" maxlength="9"
+                onblur="pesquisacep(this.value);" placeholder="CEP" class="form-control" />
+                
+            </div>
+        </div>
+
+        <div class="col-sm-12 mb-3">
+            <label for="rua" class="form-label">Rua</label>
+            <div class="input-group">
+                <span class="input-group-text custom-icon">
+                    <i class="bi bi-house"></i>
+                </span>
+                <input name="rua" type="text" id="rua" size="60" placeholder="Rua" class="form-control" />
+            </div>
+        </div>
+
+        <div class="col-sm-12 mb-3">
+            <label for="cidade" class="form-label">Cidade</label>
+            <div class="input-group">
+                <span class="input-group-text custom-icon">
+                    <i class="bi bi-building"></i>
+                </span>
+                <input name="cidade" type="text" id="cidade" size="40" placeholder="Cidade" class="form-control" />
+            </div>
+        </div>
+    </form>
+
+    <!-- Adicionando Javascript -->
+    <script>
+    
+        function limpa_formulário_cep() {
+                //Limpa valores do formulário de cep.
+                document.getElementById('rua').value=("");
+                document.getElementById('cidade').value=("");
+              
+        }
+    
+        function meu_callback(conteudo) {
+            if (!("erro" in conteudo)) {
+                //Atualiza os campos com os valores.
+                document.getElementById('rua').value=(conteudo.logradouro);
+                document.getElementById('cidade').value=(conteudo.localidade);
+            } //end if.
+            else {
+                //CEP não Encontrado.
+                limpa_formulário_cep();
+                alert("CEP não encontrado.");
+            }
+        }
+            
+        function pesquisacep(valor) {
+    
+            //Nova variável "cep" somente com dígitos.
+            var cep = valor.replace(/\D/g, '');
+    
+            //Verifica se campo cep possui valor informado.
+            if (cep != "") {
+    
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+    
+                //Valida o formato do CEP.
+                if(validacep.test(cep)) {
+    
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    document.getElementById('rua').value="...";
+                    document.getElementById('cidade').value="...";
+    
+                    //Cria um elemento javascript.
+                    var script = document.createElement('script');
+    
+                    //Sincroniza com o callback.
+                    script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+    
+                    //Insere script no documento e carrega o conteúdo.
+                    document.body.appendChild(script);
+    
+                } //end if.
+                else {
+                    //cep é inválido.
+                    limpa_formulário_cep();
+                    alert("Formato de CEP inválido.");
+                }
+            } //end if.
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulário_cep();
+            }
+        };
+    
+        </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
