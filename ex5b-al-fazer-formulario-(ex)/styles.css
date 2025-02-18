@@ -1,0 +1,22 @@
+.custom-form {
+    background: linear-gradient(145deg, #FF7F50, #FF6347, #FFD700);
+    padding: 2rem;
+    border-radius: 15px;
+
+}
+
+.form-label {
+    color: white;
+}
+
+.custom-icon {
+    background-color: #FFFAF0;
+    border: #FF7F50;
+}
+
+.btn.btn-primary.custom-button {
+    background: linear-gradient(145deg, #FF7F50, #F6E27F);
+    padding: 0.8rem 2rem;
+    border-radius: 15px;
+    border: none;
+}
